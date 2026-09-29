@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero">
+  <div>
+    <h1>Financial Dashboard</h1>
+    <p class="muted">Track spending, plan a budget and monitor savings progress.</p>
+  </div>
+  <button class="button" onclick="getAIAdvice()">✨ Get AI Advice</button>
+</section>
+
+<div class="grid cards">
+  <div class="card"><span>Monthly Income</span><strong>₹{{ "%.2f"|format(user.monthly_income or 0) }}</strong></div>
+  <div class="card"><span>Total Expenses</span><strong>₹{{ "%.2f"|format(total) }}</strong></div>
+  <div class="card"><span>Remaining</span><strong>₹{{ "%.2f"|format(remaining) }}</strong></div>
+  <div class="card"><span>Savings Goal</span><strong>₹{{ "%.2f"|format(user.savings_goal or 0) }}</strong></div>
+</div>
+
+<div class="grid two">
+  <section class="panel">
+    <h2>Income & Savings Plan</h2>
+    <form method="post" action="{{ url_for('profile') }}" class="form-grid">
+      <div><label>Monthly income</label><input name="monthly_income" type="number" step="0.01" value="{{ user.monthly_income or 0 }}" required></div>
+      <div><label>Monthly savings goal</label><input name="savings_goal" type="number" step="0.01" value="{{ user.savings_goal or 0 }}" required></div>
+      <button class="button" type="submit">Save Plan</button>
+    </form>
+  </section>
+
+  <section class="panel">
+    <h2>Add Expense</h2>
+    <form method="post" action="{{ url_for('add_expense') }}" class="form-grid">
+      <input name="category" placeholder="Category (Food, Rent...)" required>
+      <input name="amount" type="number" step="0.01" placeholder="Amount" required>
+      <input name="description" placeholder="Description">
+      <input name="expense_date" type="date">
+      <button class="button" type="submit">Add Expense</button>
+    </form>
+  </section>
+</div>
+
+<div class="grid two">
+  <section class="panel">
+    <h2>Spending by Category</h2>
+    {% if by_category %}
+      <div class="bars">
+      {% for category, amount in by_category.items() %}
+        <div class="bar-row">
+          <div><span>{{ category }}</span><b>₹{{ "%.2f"|format(amount) }}</b></div>
+          <div class="bar"><i style="width: {{ [((amount / (total or 1))*100), 100]|min }}%"></i></div>
+        </div>
+      {% endfor %}
+      </div>
+    {% else %}<p class="muted">No expenses recorded yet.</p>{% endif %}
+  </section>
+
+  <section class="panel" id="advice">
+    <h2>Smart Recommendations</h2>
+    <ul>
+      {% for item in advice %}<li>{{ item }}</li>{% endfor %}
+    </ul>
+  </section>
+</div>
+
+<section class="panel">
+  <h2>Recent Expenses</h2>
+  {% if expenses %}
+  <div class="table-wrap"><table>
+    <thead><tr><th>Date</th><th>Category</th><th>Description</th><th>Amount</th><th></th></tr></thead>
+    <tbody>
+    {% for e in expenses %}
+      <tr>
+        <td>{{ e.expense_date }}</td><td>{{ e.category }}</td><td>{{ e.description }}</td>
+        <td>₹{{ "%.2f"|format(e.amount) }}</td>
+        <td><form method="post" action="{{ url_for('delete_expense', expense_id=e.id) }}"><button class="delete" type="submit">Delete</button></form></td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table></div>
+  {% else %}<p class="muted">No expenses recorded.</p>{% endif %}
+</section>
+
+<script>
+async function getAIAdvice() {
+  const box = document.getElementById("advice");
+  box.innerHTML = "<h2>AI Recommendations</h2><p>Generating advice...</p>";
+  try {
+    const r = await fetch("/api/ai-advice", {method:"POST"});
+    const data = await r.json();
+    const items = Array.isArray(data.advice) ? data.advice : [data.advice];
+    box.innerHTML = "<h2>AI Recommendations</h2><ul>" +
+      items.map(x => `<li>${x}</li>`).join("") +
+      "</ul>" + (data.note ? `<p class="muted">${data.note}</p>` : "");
+  } catch (e) {
+    box.innerHTML = "<h2>AI Recommendations</h2><p>Unable to generate advice right now.</p>";
+  }
+}
+</script>
+{% endblock %}

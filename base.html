@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Personal Finance Advisor Bot</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header class="topbar">
+  <div>
+    <div class="brand">💰 Personal Finance Advisor</div>
+    {% if user %}<div class="muted">Welcome, {{ user.name }}</div>{% endif %}
+  </div>
+  {% if user %}
+  <a class="button ghost" href="{{ url_for('logout') }}">Logout</a>
+  {% endif %}
+</header>
+<main class="container">{% block content %}{% endblock %}</main>
+</body>
+</html>

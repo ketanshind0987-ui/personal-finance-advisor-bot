@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="auth-card">
+  <h1>Create account</h1>
+  {% if error %}<div class="error">{{ error }}</div>{% endif %}
+  <form method="post">
+    <label>Name</label><input name="name" required>
+    <label>Email</label><input name="email" type="email" required>
+    <label>Password</label><input name="password" type="password" minlength="6" required>
+    <button class="button" type="submit">Register</button>
+  </form>
+  <p>Already registered? <a href="{{ url_for('login') }}">Login</a></p>
+</div>
+{% endblock %}
