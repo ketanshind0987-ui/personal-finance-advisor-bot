@@ -74,14 +74,16 @@ def generate_local_advice(user):
         saving_rate = (remaining / income) * 100
         advice.append(f"Your current recorded balance is ₹{remaining:,.2f}, about {saving_rate:.1f}% of income.")
 
-    if by_category:
-    largest = max(by_category, key=by_category.get)
-    advice.append(
-        f"Your highest recorded spending category is {largest} at ₹{by_category[largest]:,.2f}.")
-
-    if by_category[largest] > income * 0.30:
+        if by_category:
+        largest = max(by_category, key=by_category.get)
         advice.append(
-            f"Consider setting a lower limit for {largest} and reviewing recurring purchases.")
+            f"Your highest recorded spending category is {largest} at ₹{by_category[largest]:,.2f}."
+        )
+
+        if by_category[largest] > income * 0.30:
+            advice.append(
+                f"Consider setting a lower limit for {largest} and reviewing recurring purchases."
+            )
     if user.savings_goal > 0:
         if remaining >= user.savings_goal:
             advice.append("Your current recorded balance meets your monthly savings goal.")
