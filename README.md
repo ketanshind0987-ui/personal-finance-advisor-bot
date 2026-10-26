@@ -3,7 +3,8 @@ A student-friendly full-stack personal finance management project based on the p
 
 Full documentation:
 https://drive.google.com/drive/folders/1-dSSUYEjbKn2NMSFFQX-tmRnsQh2KmzN
-
+live demo 
+https://personal-finance-advisor-bot-yq2w.onrender.com
 
 ## Features
 - User registration and login
