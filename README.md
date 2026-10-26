@@ -1,5 +1,6 @@
 # Personal Finance Advisor Bot
-
+Full documentation:
+https://drive.google.com/drive/folders/1-dSSUYEjbKn2NMSFFQX-tmRnsQh2KmzN
 A student-friendly full-stack personal finance management project based on the provided project specification.
 
 ## Features
