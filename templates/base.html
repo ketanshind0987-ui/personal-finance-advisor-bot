@@ -7,6 +7,10 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
+<video id="background-video" autoplay muted loop playsinline>
+    <source src="{{ url_for('static', filename='videos/background.mp4') }}" type="video/mp4">
+</video>
+
 <header class="topbar">
   <div>
     <div class="brand">💰 Personal Finance Advisor</div>
