@@ -7,6 +7,9 @@ https://drive.google.com/drive/folders/1-dSSUYEjbKn2NMSFFQX-tmRnsQh2KmzN
 live demo 
 https://personal-finance-advisor-bot-yq2w.onrender.com
 
+demo video
+https://drive.google.com/drive/folders/1qLi7DWLtazYSK5emQxTxNhd-Kn8RTcLJ
+
 ## Features
 - User registration and login
 - Secure password hashing and session management
