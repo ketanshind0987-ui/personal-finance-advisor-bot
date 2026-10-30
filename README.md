@@ -1,4 +1,5 @@
 # Personal Finance Advisor Bot
+ketan
 A student-friendly full-stack personal finance management project based on the provided project specification.An AI-powered BFSI platform delivering instant loan eligibility checks, credit score insights, smart EMI planning, and personalized financial guidance, built to make better money decisions simple.
 
 Full documentation:
